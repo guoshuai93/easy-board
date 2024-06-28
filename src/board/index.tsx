@@ -22,8 +22,7 @@ const Board = () => {
     setModalProps({ open: true, task: payload });
   }, []);
 
-  const handleSaveTask = (paylaod) => {
-    console.log("paylaod", paylaod);
+  const handleSaveTask = (paylaod: ITasks) => {
     addTask(paylaod);
     setModalProps((s) => ({ ...s, open: false }));
   };
