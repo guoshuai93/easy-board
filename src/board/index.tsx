@@ -13,12 +13,10 @@ const Board = () => {
   const [modalProps, setModalProps] = useState({ open: false, task: {} });
 
   const handleAddTask = useCallback((colId: string) => {
-    console.log("colId", colId);
     setModalProps({ open: true, task: { colId } });
   }, []);
 
   const handleEditTask = useCallback((payload: ITasks) => {
-    console.log("payload", payload);
     setModalProps({ open: true, task: payload });
   }, []);
 
