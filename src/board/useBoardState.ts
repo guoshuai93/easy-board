@@ -59,11 +59,10 @@ interface Actions {
 /**
  * [state, {move, addCol, updateCol, deleteCol, addItem, deleteItem, updateitem}] = useBoardState(defaultValue)
  */
-const useBoardState = (defaultValue = listDefault): [IListItem[], Actions] => {
-  const [state, setState] = useLocalStorageState<IListItem[]>(
-    "personal-kanban",
-    { defaultValue }
-  );
+const useBoardState = (): [IListItem[] | undefined, Actions] => {
+  const [state, setState] = useLocalStorageState("personal-kanban", {
+    defaultValue: listDefault,
+  });
   const stateMap = useRef<Map<string, IStateMap>>(new Map());
 
   useEffect(() => {
@@ -115,7 +114,9 @@ const useBoardState = (defaultValue = listDefault): [IListItem[], Actions] => {
         ...paylaod,
         id: paylaod.id || uid(),
         time: formatDate(paylaod.time),
-        createTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+        createTime: isEdit
+          ? paylaod.createTime
+          : dayjs().format("YYYY-MM-DD HH:mm:ss"),
       };
       setState(
         produce((draft) => {
@@ -147,7 +148,6 @@ const useBoardState = (defaultValue = listDefault): [IListItem[], Actions] => {
     (id: string) => {
       setState(
         produce((draft) => {
-          /**  */
           const t = stateMap.current.get(id);
           if (draft && t?.cIndex !== undefined) {
             draft[t.cIndex!].data = draft[t.cIndex!].data.filter(
