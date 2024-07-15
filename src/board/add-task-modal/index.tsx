@@ -24,8 +24,8 @@ const AddTask = ({ open, task, onCancel, onOk }: IProps) => {
   const handleOk = async () => {
     try {
       const v = await form.validateFields();
-      console.log("v", v);
-      onOk && onOk(v);
+      const data = { ...task, ...v };
+      onOk && onOk(data);
       // 添加任务
     } catch (error) {
       console.log("error", error);

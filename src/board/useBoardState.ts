@@ -110,13 +110,13 @@ const useBoardState = (): [IListItem[] | undefined, Actions] => {
     (paylaod: ITasks) => {
       // 如果没有ID，需要赋值一个
       const isEdit = !!paylaod.id;
+      const now = dayjs().format("YYYY-MM-DD HH:mm:ss")
+      
       const item = {
         ...paylaod,
         id: paylaod.id || uid(),
         time: formatDate(paylaod.time),
-        createTime: isEdit
-          ? paylaod.createTime
-          : dayjs().format("YYYY-MM-DD HH:mm:ss"),
+        createTime: paylaod.createTime || now
       };
       setState(
         produce((draft) => {
